@@ -1,60 +1,29 @@
 // return the number of blocks from HQ to pickup location 
-function distanceFromHqInBlocks(pickupLoc) {
-    // create result var
-    let numOfBlocks;
-
-    numOfBlocks = Math.abs(pickupLoc - 42);
-
-    // return result var
-    return numOfBlocks;
+const distanceFromHqInBlocks = (blocks) => {
+    return Math.abs(blocks - 42);
 }
 
 // return the number of feet from HQ to pickup location -- use distanceFromHqInBlocks() to return correct value
-function distanceFromHqInFeet(pickupLoc) {
-    const numOfBlocks = distanceFromHqInBlocks(pickupLoc);
-
-    // create result var
-    let numOfFeet;
-
-    numOfFeet = numOfBlocks * 264;
-
-    // return result var
-    return numOfFeet;
+const distanceFromHqInFeet = (blocks) => {
+    const numBlocks = distanceFromHqInBlocks(blocks);
+    return numBlocks * 264;
 }
 
 // calculate the number of feet a passenger travels -- 1 block = 264 ft
-function distanceTravelledInFeet(start, destination) {
-    // create result var
-    let distanceInFeet;
-
-    distanceInFeet = Math.abs(start - destination) * 264;
-
-    // return result var
-    return distanceInFeet;
+const distanceTravelledInFeet = (start, destination) => {
+    return Math.abs(start - destination) * 264;
 }
 
-/* calculate the fare -- use distanceTravelledInFeet()
-first 400ft are free
-400 - 2000 -- 0.02 per foot (not including 400)
-2000 - 2500 -- flat fare
-2500 and over -- cannot travel that far
-*/
-function calculatesFarePrice(start, destination) {
-    // create result var
-    let calculatedFare = 0;
+const calculatesFarePrice = (start, destination) => {
+    const totalDist = distanceTravelledInFeet(start, destination)
 
-    let distanceInFeet = distanceTravelledInFeet(start, destination);
-
-    if (distanceInFeet <= 400) {
+    if (totalDist <= 400) {
         return 0;
-    } else if (distanceInFeet > 400 && distanceInFeet < 2000) {
-        calculatedFare = (distanceInFeet - 400) * 0.02;
-    } else if (distanceInFeet > 2000 && distanceInFeet < 2500) {
-        calculatedFare = 25;
+    } else if (totalDist > 400 && totalDist < 2000) {
+        return (totalDist - 400) * 0.02;
+    } else if (totalDist > 2000 && totalDist < 2500) {
+        return 25;
     } else {
         return 'cannot travel that far';
     }
-
-    // return result var
-    return calculatedFare;
 }
